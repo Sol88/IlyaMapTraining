@@ -22,7 +22,7 @@ class ImageSheetViewController: UIViewController {
         layout.scrollDirection = .horizontal
         layout.itemSize = CGSize(width: collectionHeight, height: collectionHeight)
         
-        let imageCollectionView = UICollectionView(frame: CGRect(x: 8.0, y: 8.0, width: actionSheet!.view.bounds.width - 8.0 * 4, height: collectionHeight), collectionViewLayout: layout)
+        let imageCollectionView = UICollectionView(frame: CGRect(x: 8.0, y: 48.0, width: actionSheet!.view.bounds.width - 8.0 * 4, height: collectionHeight), collectionViewLayout: layout)
         
         imageCollectionView.delegate = self
         imageCollectionView.dataSource = self
@@ -36,6 +36,7 @@ class ImageSheetViewController: UIViewController {
         return imageCollectionView
     }()
     private var images: PHFetchResult<PHAsset>?
+    private var imagesWithoutLocation: [PHAsset] = []
     private var actions: [UIAlertAction] = []
     private lazy var animator: UIViewPropertyAnimator = {
         let parameters = UICubicTimingParameters(animationCurve: .easeInOut)
@@ -44,7 +45,7 @@ class ImageSheetViewController: UIViewController {
     }()
     
     // Shared properties
-    
+    var newLocationForImage: CLLocationCoordinate2D?
     var getThumbnailImageHandler: ((UIImage, CLLocation?) -> Void)?
     var getHighQualityImageHandler: ((UIImage, CLLocation?) -> Void)?
     var targetSize: CGSize? {
@@ -84,8 +85,13 @@ class ImageSheetViewController: UIViewController {
         let imageCollectionView = collectionView
         
         if accessGranted {
-            actionSheet.title = "\n\n\n\n\n"
-            actionSheet.view.addSubview(imageCollectionView)
+            if imagesWithoutLocation.count > 0 {
+                actionSheet.title = "Set geotag to image\n\n\n\n\n\n\n"
+                actionSheet.view.addSubview(imageCollectionView)
+            } else {
+                actionSheet.title = "There are no images without geotag"
+            }
+            
         } else {
             actionSheet.title = nil
             imageCollectionView.removeFromSuperview()
@@ -113,41 +119,56 @@ class ImageSheetViewController: UIViewController {
         
         let allPhotosOptions = PHFetchOptions()
         allPhotosOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
+        
         images = PHAsset.fetchAssets(with: allPhotosOptions)
+        guard let images = images else { return }
+        for i in 0..<images.count {
+            let image = images.object(at: i)
+            if image.location == nil {
+                imagesWithoutLocation.append(image)
+            }
+        }
     }
 }
 
 //MARK: - UICollectionViewDelegate, UICollectionViewDataSource
 extension ImageSheetViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let images = images else { return 0 }
-        return images.count
+//        guard let images = images else { return 0 }
+//        return images.count
+        return imagesWithoutLocation.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseCellIdentifier, for: indexPath) as! ImagesCollectionViewCell
-        if let asset = images?.object(at: indexPath.row) {
-            let location = asset.location
-            cell.representedAssetIdentifier = asset.localIdentifier
-            imageManager.requestImage(for: asset, targetSize: thumbnailSize, contentMode: .aspectFill, options: nil) { image, _ in
-                if cell.representedAssetIdentifier == asset.localIdentifier {
-                    cell.populate(with: image, location: location)
-                }
+        let asset = imagesWithoutLocation[indexPath.row]
+        let location = asset.location
+        cell.representedAssetIdentifier = asset.localIdentifier
+        imageManager.requestImage(for: asset, targetSize: thumbnailSize, contentMode: .aspectFill, options: nil) { image, _ in
+            if cell.representedAssetIdentifier == asset.localIdentifier {
+                cell.populate(with: image, location: location)
             }
         }
-        
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let targetSize = targetSize {
             let selectedCell = collectionView.cellForItem(at: indexPath) as! ImagesCollectionViewCell
-            getThumbnailImageHandler?(selectedCell.thumbnailImage, selectedCell.location)
-            if let selectedAsset = images?.object(at: indexPath.row) {
+            let selectedAsset = imagesWithoutLocation[indexPath.row]
+            if let location = newLocationForImage {
+                let newLocation = CLLocation(latitude: location.latitude, longitude: location.longitude)
+                PHPhotoLibrary.shared().performChanges({
+                    let assetChangeRequest = PHAssetChangeRequest.init(for: selectedAsset)
+                    assetChangeRequest.location = newLocation
+                })
+                selectedCell.location = newLocation
+                getThumbnailImageHandler?(selectedCell.thumbnailImage, selectedCell.location)
                 getHighQualityImage(for: selectedAsset, with: targetSize)
+                imagesWithoutLocation.remove(at: indexPath.row)
+                collectionView.deleteItems(at: [indexPath])
             }
         }
-        
         actionSheet?.dismiss(animated: true)
     }
     

@@ -39,6 +39,7 @@ class ImageMapViewController: UIViewController {
         let touchLocation = sender.location(in: mapView)
         let locationCoordinate = mapView.convert(touchLocation, toCoordinateFrom: mapView)
         print("Tapped at lat: \(locationCoordinate.latitude) long: \(locationCoordinate.longitude)")
+        imageSheetViewController.newLocationForImage = locationCoordinate
         imageSheetViewController.showActionSheet()
     }
     
@@ -48,10 +49,6 @@ class ImageMapViewController: UIViewController {
         
         mapView = MKMapView(frame: frame)
         mapView.addGestureRecognizer(longPressGestrueRecognizer)
-        
-//        let annotation = MKPointAnnotation()
-//        annotation.coordinate = CLLocationCoordinate2D(latitude: 11.0, longitude: 11.0)
-//        mapView.addAnnotation(annotation)
         mapView.mapType = .standard
         mapView.delegate = self
         
@@ -64,13 +61,9 @@ class ImageMapViewController: UIViewController {
         imageSheetViewController.targetSize = mapView.frame.size
         imageSheetViewController.getThumbnailImageHandler = { [weak self] image, location in
             if let location = location {
-                let annotation = MKPointAnnotation()
-                annotation.coordinate = location.coordinate
+                let imageData = ImageData.init(image: image, location: location.coordinate)
+                let annotation = CircleImageAnnotation(imageData: imageData)
                 self?.mapView.addAnnotation(annotation)
-                
-                let region = MKCoordinateRegion(center: location.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
-                self?.mapView.setRegion(region, animated: true)
-                print(annotation.coordinate)
             }
         }
         addChild(imageSheetViewController)
@@ -83,12 +76,10 @@ class ImageMapViewController: UIViewController {
         allPhotosOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
         images = PHAsset.fetchAssets(with: allPhotosOptions)
         
-        
         addAnnotationsOnMap()
     }
     
     func addAnnotationsOnMap() {
-        // TO-DO
         guard let images = images else { return }
         for i in 0..<images.count {
             let asset = images.object(at: i)
@@ -108,38 +99,12 @@ class ImageMapViewController: UIViewController {
 }
 
 extension ImageMapViewController: MKMapViewDelegate {
-//    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-//        <#code#>
-//    }
-//
-//    func mapView(_ mapView: MKMapView, didAdd views: [MKAnnotationView]) {
-//        <#code#>
-//    }
-//
-//    func mapView(_ mapView: MKMapView, clusterAnnotationForMemberAnnotations memberAnnotations: [MKAnnotation]) -> MKClusterAnnotation {
-//        let cluster = MKClusterAnnotation(memberAnnotations: memberAnnotations)
-//        return cluster
-//    }
-    
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         guard let annotation = annotation as? CircleImageAnnotation else { return nil }
 
         let annotationView = CircleImageAnnotationView(annotation: annotation, reuseIdentifier: CircleImageAnnotationView.reuseID)
-        annotationView.layer.cornerRadius = 30
-        annotationView.clipsToBounds = true
         
         return annotationView
-
-//        if annotationView != nil {
-//            annotationView?.annotation = annotation
-//        } else {
-//            annotationView = CircleImageAnnotationView(annotation: annotation, reuseIdentifier: reuseIdentifier)
-//        }
-//
-//        annotationView?.image = annotation.imageData.image
-//        annotationView?.layer.cornerRadius = 30
-//        annotationView?.clipsToBounds = true
-//        return annotationView
     }
 }
 
