@@ -38,7 +38,7 @@ class ImageMapViewController: UIViewController {
         if sender.state != UIGestureRecognizer.State.began { return }
         let touchLocation = sender.location(in: mapView)
         let locationCoordinate = mapView.convert(touchLocation, toCoordinateFrom: mapView)
-        print("Tapped at lat: \(locationCoordinate.latitude) long: \(locationCoordinate.longitude)")
+
         imageSheetViewController.newLocationForImage = locationCoordinate
         imageSheetViewController.showActionSheet()
     }
@@ -60,11 +60,11 @@ class ImageMapViewController: UIViewController {
         imageSheetViewController = ImageSheetViewController()
         imageSheetViewController.targetSize = mapView.frame.size
         imageSheetViewController.getThumbnailImageHandler = { [weak self] image, location in
-            if let location = location {
-                let imageData = ImageData.init(image: image, location: location.coordinate)
-                let annotation = CircleImageAnnotation(imageData: imageData)
-                self?.mapView.addAnnotation(annotation)
-            }
+            guard let location = location else { return }
+            
+            let imageData = ImageData.init(image: image, location: location.coordinate)
+            let annotation = CircleImageAnnotation(imageData: imageData)
+            self?.mapView.addAnnotation(annotation)
         }
         addChild(imageSheetViewController)
     }
@@ -83,16 +83,19 @@ class ImageMapViewController: UIViewController {
         guard let images = images else { return }
         for i in 0..<images.count {
             let asset = images.object(at: i)
-            if let location = asset.location {
-                let annotation = CircleImageAnnotation()
-                annotation.representedAssetIdentifier = asset.localIdentifier
-                imageManager.requestImage(for: asset, targetSize: CGSize(width: 30, height: 30), contentMode: .aspectFill, options: nil) { [weak self] image, _ in
-                    if annotation.representedAssetIdentifier == asset.localIdentifier {
-                        let imageData = ImageData.init(image: image!, location: location.coordinate)
-                        annotation.imageData = imageData
-                        self?.mapView.addAnnotation(annotation)
-                    }
-                }
+            
+            guard let location = asset.location else { continue }
+            
+            let annotation = CircleImageAnnotation()
+            annotation.representedAssetIdentifier = asset.localIdentifier
+            
+            imageManager.requestImage(for: asset, targetSize: CGSize(width: 30, height: 30), contentMode: .aspectFill, options: nil) { [weak self] image, _ in
+                guard annotation.representedAssetIdentifier == asset.localIdentifier else { return }
+                
+                let imageData = ImageData.init(image: image!, location: location.coordinate)
+                annotation.imageData = imageData
+                
+                self?.mapView.addAnnotation(annotation)
             }
         }
     }
@@ -100,10 +103,9 @@ class ImageMapViewController: UIViewController {
 
 extension ImageMapViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        guard let annotation = annotation as? CircleImageAnnotation else { return nil }
-
-        let annotationView = CircleImageAnnotationView(annotation: annotation, reuseIdentifier: CircleImageAnnotationView.reuseID)
         
+        guard let annotation = annotation as? CircleImageAnnotation else { return nil }
+        let annotationView = CircleImageAnnotationView(annotation: annotation, reuseIdentifier: CircleImageAnnotationView.reuseID)
         return annotationView
     }
 }
