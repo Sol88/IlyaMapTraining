@@ -12,6 +12,7 @@ import CoreLocation
 
 class CircleImageAnnotation: NSObject, MKAnnotation {
     
+    
     var imageData: ImageData!
     var representedAssetIdentifier: String!
     

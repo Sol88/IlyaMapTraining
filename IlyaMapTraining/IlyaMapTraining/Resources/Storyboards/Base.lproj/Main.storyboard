@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="YNA-0p-R25">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -9,10 +9,82 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="rx7-YV-21w">
+            <objects>
+                <navigationController id="YNA-0p-R25" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Ehy-V2-3k7">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="bwA-rm-GrD" kind="relationship" relationship="rootViewController" id="cq8-6J-nbQ"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="IVb-na-lJ2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1585" y="146"/>
+        </scene>
+        <!--Login View Controller-->
+        <scene sceneID="o2p-Q9-sf1">
+            <objects>
+                <viewController storyboardIdentifier="LoginViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="bwA-rm-GrD" customClass="LoginViewController" customModule="IlyaMapTraining" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="0E2-nC-COY">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FYR-kr-02T">
+                                <rect key="frame" x="140" y="186" width="94" height="30"/>
+                                <state key="normal" title="Login with VK"/>
+                                <connections>
+                                    <action selector="loginVKButtonHandler:" destination="bwA-rm-GrD" eventType="touchUpInside" id="YVN-fi-qlS"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h96-zx-IQ6">
+                                <rect key="frame" x="118" y="294" width="138" height="30"/>
+                                <state key="normal" title="Enter without loggin"/>
+                                <connections>
+                                    <action selector="enterWithoutLogginHandler:" destination="bwA-rm-GrD" eventType="touchUpInside" id="Bo7-pT-8BZ"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YUv-Za-75D">
+                                <rect key="frame" x="118" y="395" width="133" height="30"/>
+                                <state key="normal" title="Vk Photo collection"/>
+                                <connections>
+                                    <action selector="goToPhotoCollectionHandler:" destination="bwA-rm-GrD" eventType="touchUpInside" id="aee-1f-ePg"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="h96-zx-IQ6" firstAttribute="leading" secondItem="aYu-Pj-6Nf" secondAttribute="leading" constant="118" id="4yD-t8-rLQ"/>
+                            <constraint firstItem="aYu-Pj-6Nf" firstAttribute="bottom" secondItem="YUv-Za-75D" secondAttribute="bottom" constant="242" id="5v6-ND-e9G"/>
+                            <constraint firstItem="h96-zx-IQ6" firstAttribute="top" secondItem="FYR-kr-02T" secondAttribute="bottom" constant="78" id="9JU-iA-KWA"/>
+                            <constraint firstItem="FYR-kr-02T" firstAttribute="top" secondItem="aYu-Pj-6Nf" secondAttribute="top" constant="122" id="ARV-e5-6b9"/>
+                            <constraint firstItem="YUv-Za-75D" firstAttribute="leading" secondItem="aYu-Pj-6Nf" secondAttribute="leading" constant="118" id="Nph-Rj-Ri2"/>
+                            <constraint firstItem="aYu-Pj-6Nf" firstAttribute="trailing" secondItem="YUv-Za-75D" secondAttribute="trailing" constant="124" id="RRp-WO-fcn"/>
+                            <constraint firstItem="YUv-Za-75D" firstAttribute="top" secondItem="h96-zx-IQ6" secondAttribute="bottom" constant="71" id="Trr-uO-5iP"/>
+                            <constraint firstItem="aYu-Pj-6Nf" firstAttribute="trailing" secondItem="h96-zx-IQ6" secondAttribute="trailing" constant="119" id="ibd-Ra-9IT"/>
+                            <constraint firstItem="aYu-Pj-6Nf" firstAttribute="trailing" secondItem="FYR-kr-02T" secondAttribute="trailing" constant="141" id="s0Y-bN-DEf"/>
+                            <constraint firstItem="FYR-kr-02T" firstAttribute="leading" secondItem="aYu-Pj-6Nf" secondAttribute="leading" constant="140" id="u3c-4N-NPD"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="aYu-Pj-6Nf"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="OJ7-8l-351"/>
+                    <connections>
+                        <outlet property="enterWithoutLoginButton" destination="h96-zx-IQ6" id="2ye-Nt-t58"/>
+                        <outlet property="goToCollectionViewButton" destination="YUv-Za-75D" id="ndb-Nb-YgY"/>
+                        <outlet property="loginButton" destination="FYR-kr-02T" id="Bl8-HQ-TzG"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gIn-Zx-dir" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-690.39999999999998" y="144.3778110944528"/>
+        </scene>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="IlyaMapTraining" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="BYZ-38-t0r" customClass="ViewController" customModule="IlyaMapTraining" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -22,7 +94,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="136.80000000000001" y="133.5832083958021"/>
+            <point key="canvasLocation" x="137" y="145"/>
         </scene>
     </scenes>
 </document>

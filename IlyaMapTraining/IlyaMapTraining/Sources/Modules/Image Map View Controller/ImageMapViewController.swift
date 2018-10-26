@@ -6,6 +6,8 @@
 //  Copyright © 2018 Kovalenko Ilia. All rights reserved.
 //
 
+import VK_ios_sdk
+import Kingfisher
 import UIKit
 import MapKit
 import Photos
@@ -16,12 +18,15 @@ class ImageMapViewController: UIViewController {
     private var imageSheetViewController: ImageSheetViewController!
     private let imageManager = PHCachingImageManager()
     private var images: PHFetchResult<PHAsset>?
+    
+    var fromLibrary = true
     var mapView: MKMapView!
     
     //MARK: - Initialization
-    init(with frame: CGRect) {
+    init(with frame: CGRect, fromLibrary: Bool) {
         super.init(nibName: nil, bundle: nil)
         
+        self.fromLibrary = fromLibrary
         configureMapView(with: frame)
         configureImageSheetViewController()
         if checkAuthorizationStatus() {
@@ -80,6 +85,14 @@ class ImageMapViewController: UIViewController {
     }
     
     func addAnnotationsOnMap() {
+        if fromLibrary {
+            addAnnotationsFromLibrary()
+        } else {
+            addAnnotationsFromVK()
+        }
+    }
+    
+    func addAnnotationsFromLibrary() {
         guard let images = images else { return }
         for i in 0..<images.count {
             let asset = images.object(at: i)
@@ -99,6 +112,85 @@ class ImageMapViewController: UIViewController {
             }
         }
     }
+    
+    func addAnnotationsFromVK() {
+        fetchImagesFromVK()
+    }
+    
+    func fetchImagesFromVK() {
+        let photoReq: VKRequest? = VKRequest(method: "photos.getAll", parameters: ["skip_hidden": 1])
+        
+        photoReq?.execute(resultBlock: { response in
+            print(response)
+            guard let jsonResult = response?.json as? [String: Any] else { return }
+            
+            
+            let wrapper = VKPhotoResponse.init(JSON: jsonResult)
+            guard let items = wrapper?.items else { return }
+            for item in items {
+                let annotation = CircleImageAnnotation()
+                let url = URL(string: item.photo604!)!
+                ImageDownloader.default.downloadImage(with: url, options: [], progressBlock: nil) {
+                    [weak self] image, error, url, data in
+                    if let image = image {
+                        self?.getMetaData(for: image)
+                    }
+                }
+            }
+            
+            
+            
+        }, errorBlock: { error in
+            if let error = error {
+                print(error)
+            }
+        })
+    }
+    
+    func getMetaData(for image: UIImage) {
+        guard let data = image.jpegData(compressionQuality: 1) else { return }
+        getMetaData(for: data)
+    }
+    
+    func getMetaData(for data: Data) {
+        guard let source = CGImageSourceCreateWithData(data as CFData, nil) else { return }
+        
+        let count = CGImageSourceGetCount(source)
+        print("count: \(count)")
+        for index in 0..<count {
+            if let metaData = CGImageSourceCopyMetadataAtIndex(source, 0, nil) {
+                print("all metaData[\(index)]: \(metaData)")
+                if let tags = CGImageMetadataCopyTags(metaData) as? [CGImageMetadataTag] {
+
+                    print("number of tags - \(tags.count)")
+
+                    for tag in tags {
+
+                        let tagType = CGImageMetadataTagGetTypeID()
+                        if let name = CGImageMetadataTagCopyName(tag) {
+                            print("name: \(name)")
+                        }
+                        if let value = CGImageMetadataTagCopyValue(tag) {
+                            print("value: \(value)")
+                        }
+                        if let prefix = CGImageMetadataTagCopyPrefix(tag) {
+                            print("prefix: \(prefix)")
+                        }
+                        if let namespace = CGImageMetadataTagCopyNamespace(tag) {
+                            print("namespace: \(namespace)")
+                        }
+                        if let qualifiers = CGImageMetadataTagCopyQualifiers(tag) {
+                            print("qualifiers: \(qualifiers)")
+                        }
+                        print("-------")
+                    }
+                }
+            }
+            
+        }
+        
+    }
+    
 }
 
 extension ImageMapViewController: MKMapViewDelegate {
