@@ -1,0 +1,6 @@
+framework module Pods_IlyaMapTraining {
+  umbrella header "Pods-IlyaMapTraining-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2ADBB2224151AB75A0D8458E /* Pods_IlyaMapTraining.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2477C35E8515DA026F1873D /* Pods_IlyaMapTraining.framework */; };
+		9952A21A21833D37004B672A /* VKImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9952A21921833D37004B672A /* VKImage.swift */; };
+		9952A21C21833DB4004B672A /* VKImageSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9952A21B21833DB4004B672A /* VKImageSize.swift */; };
 		997B5F362182E414000257C4 /* ClusterAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997B5F352182E414000257C4 /* ClusterAnnotationView.swift */; };
 		99A0CCCE2181EBF2007E4544 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A0CCCD2181EBF2007E4544 /* AppDelegate.swift */; };
 		99A0CCD02181EBF2007E4544 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A0CCCF2181EBF2007E4544 /* ViewController.swift */; };
@@ -20,9 +23,14 @@
 		99B03C9B218206380023E385 /* CircleImageAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B03C9A218206380023E385 /* CircleImageAnnotationView.swift */; };
 		99B03C9D218208030023E385 /* CircleImageAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B03C9C218208030023E385 /* CircleImageAnnotation.swift */; };
 		99B03C9F218208F00023E385 /* ImageData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B03C9E218208F00023E385 /* ImageData.swift */; };
+		99F50C7B2183133D001F7689 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F50C7A2183133D001F7689 /* LoginViewController.swift */; };
+		99F50C7D21833C39001F7689 /* VKPhotoResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F50C7C21833C39001F7689 /* VKPhotoResponse.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		43FA6E933E027F58CB9BF309 /* Pods-IlyaMapTraining.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IlyaMapTraining.release.xcconfig"; path = "Pods/Target Support Files/Pods-IlyaMapTraining/Pods-IlyaMapTraining.release.xcconfig"; sourceTree = "<group>"; };
+		9952A21921833D37004B672A /* VKImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VKImage.swift; sourceTree = "<group>"; };
+		9952A21B21833DB4004B672A /* VKImageSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VKImageSize.swift; sourceTree = "<group>"; };
 		997B5F352182E414000257C4 /* ClusterAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClusterAnnotationView.swift; sourceTree = "<group>"; };
 		99A0CCCA2181EBF2007E4544 /* IlyaMapTraining.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IlyaMapTraining.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		99A0CCCD2181EBF2007E4544 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -38,6 +46,10 @@
 		99B03C9A218206380023E385 /* CircleImageAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleImageAnnotationView.swift; sourceTree = "<group>"; };
 		99B03C9C218208030023E385 /* CircleImageAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleImageAnnotation.swift; sourceTree = "<group>"; };
 		99B03C9E218208F00023E385 /* ImageData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageData.swift; sourceTree = "<group>"; };
+		99F50C7A2183133D001F7689 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		99F50C7C21833C39001F7689 /* VKPhotoResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VKPhotoResponse.swift; sourceTree = "<group>"; };
+		D2477C35E8515DA026F1873D /* Pods_IlyaMapTraining.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_IlyaMapTraining.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F4BB24A1D5C863535DB3E110 /* Pods-IlyaMapTraining.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IlyaMapTraining.debug.xcconfig"; path = "Pods/Target Support Files/Pods-IlyaMapTraining/Pods-IlyaMapTraining.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,17 +57,57 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2ADBB2224151AB75A0D8458E /* Pods_IlyaMapTraining.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2E212DD305C703F6A0D60456 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				F4BB24A1D5C863535DB3E110 /* Pods-IlyaMapTraining.debug.xcconfig */,
+				43FA6E933E027F58CB9BF309 /* Pods-IlyaMapTraining.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		3D728533B3618520CC8A2679 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D2477C35E8515DA026F1873D /* Pods_IlyaMapTraining.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		9952A21D218351CE004B672A /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				99F50C7C21833C39001F7689 /* VKPhotoResponse.swift */,
+				9952A21921833D37004B672A /* VKImage.swift */,
+				9952A21B21833DB4004B672A /* VKImageSize.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		9952A21E218351D8004B672A /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+				99A0CCE52181EC77007E4544 /* Main Screen */,
+				99A0CCE62181EC80007E4544 /* Image Map View Controller */,
+				99B03C952181F7560023E385 /* Image Sheet */,
+			);
+			path = Modules;
+			sourceTree = "<group>";
+		};
 		99A0CCC12181EBF2007E4544 = {
 			isa = PBXGroup;
 			children = (
 				99A0CCCC2181EBF2007E4544 /* IlyaMapTraining */,
 				99A0CCCB2181EBF2007E4544 /* Products */,
+				2E212DD305C703F6A0D60456 /* Pods */,
+				3D728533B3618520CC8A2679 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -80,9 +132,8 @@
 			isa = PBXGroup;
 			children = (
 				99A0CCCD2181EBF2007E4544 /* AppDelegate.swift */,
-				99A0CCE52181EC77007E4544 /* Main Screen */,
-				99A0CCE62181EC80007E4544 /* Image Map View Controller */,
-				99B03C952181F7560023E385 /* Image Sheet */,
+				9952A21E218351D8004B672A /* Modules */,
+				9952A21D218351CE004B672A /* Models */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -111,6 +162,7 @@
 			isa = PBXGroup;
 			children = (
 				99A0CCCF2181EBF2007E4544 /* ViewController.swift */,
+				99F50C7A2183133D001F7689 /* LoginViewController.swift */,
 			);
 			path = "Main Screen";
 			sourceTree = "<group>";
@@ -143,9 +195,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 99A0CCDF2181EBF4007E4544 /* Build configuration list for PBXNativeTarget "IlyaMapTraining" */;
 			buildPhases = (
+				A2375623AB591838C49E35EA /* [CP] Check Pods Manifest.lock */,
 				99A0CCC62181EBF2007E4544 /* Sources */,
 				99A0CCC72181EBF2007E4544 /* Frameworks */,
 				99A0CCC82181EBF2007E4544 /* Resources */,
+				2BCFF181A49BDCEE148B0AC9 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -202,13 +256,59 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		2BCFF181A49BDCEE148B0AC9 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-IlyaMapTraining/Pods-IlyaMapTraining-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
+				"${BUILT_PRODUCTS_DIR}/ObjectMapper/ObjectMapper.framework",
+				"${BUILT_PRODUCTS_DIR}/VK-ios-sdk/VK_ios_sdk.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ObjectMapper.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/VK_ios_sdk.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-IlyaMapTraining/Pods-IlyaMapTraining-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A2375623AB591838C49E35EA /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-IlyaMapTraining-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		99A0CCC62181EBF2007E4544 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				99B03C992181F7900023E385 /* ImageCollectionViewCell.swift in Sources */,
+				9952A21C21833DB4004B672A /* VKImageSize.swift in Sources */,
 				99A0CCD02181EBF2007E4544 /* ViewController.swift in Sources */,
+				99F50C7D21833C39001F7689 /* VKPhotoResponse.swift in Sources */,
+				9952A21A21833D37004B672A /* VKImage.swift in Sources */,
 				997B5F362182E414000257C4 /* ClusterAnnotationView.swift in Sources */,
 				99B03C972181F7770023E385 /* ImageSheetViewController.swift in Sources */,
 				99B03C9B218206380023E385 /* CircleImageAnnotationView.swift in Sources */,
@@ -217,6 +317,7 @@
 				99A0CCD62181EBF2007E4544 /* IlyaMapTraining.xcdatamodeld in Sources */,
 				99B03C9D218208030023E385 /* CircleImageAnnotation.swift in Sources */,
 				99B03C942181EE4C0023E385 /* ImageMapViewController.swift in Sources */,
+				99F50C7B2183133D001F7689 /* LoginViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -360,6 +461,7 @@
 		};
 		99A0CCE02181EBF4007E4544 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F4BB24A1D5C863535DB3E110 /* Pods-IlyaMapTraining.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -378,6 +480,7 @@
 		};
 		99A0CCE12181EBF4007E4544 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 43FA6E933E027F58CB9BF309 /* Pods-IlyaMapTraining.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;

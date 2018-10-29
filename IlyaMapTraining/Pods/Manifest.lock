@@ -1,0 +1,24 @@
+PODS:
+  - Kingfisher (4.10.0)
+  - ObjectMapper (3.3.0)
+  - VK-ios-sdk (1.4.6)
+
+DEPENDENCIES:
+  - Kingfisher (~> 4.0)
+  - ObjectMapper (~> 3.3)
+  - VK-ios-sdk
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - Kingfisher
+    - ObjectMapper
+    - VK-ios-sdk
+
+SPEC CHECKSUMS:
+  Kingfisher: 43c4b802d8b5256cf1f4379e9cd10b329be6d3e2
+  ObjectMapper: b612bf8c8e99c4dc0bb6013a51f7c27966ed5da9
+  VK-ios-sdk: 7fd48bc5aaa6b96c3197c1987eb6593f2ea67331
+
+PODFILE CHECKSUM: c8628e5246872e610cdc86235747f3001d378496
+
+COCOAPODS: 1.5.3
