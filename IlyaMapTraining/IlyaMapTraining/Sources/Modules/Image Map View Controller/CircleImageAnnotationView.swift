@@ -26,6 +26,7 @@ class CircleImageAnnotationView: MKAnnotationView {
         imageView.clipsToBounds = true
         imageView.contentMode = .scaleAspectFill
         imageView.layer.cornerRadius = 30
+        
         addSubview(imageView)
     }
     
@@ -40,7 +41,7 @@ class CircleImageAnnotationView: MKAnnotationView {
     
     override func prepareForDisplay() {
         super.prepareForDisplay()
-        displayPriority = .defaultHigh
+        
         guard let annotation = annotation as? CircleImageAnnotation else { return }
         imageView.image = annotation.imageData.image
     }

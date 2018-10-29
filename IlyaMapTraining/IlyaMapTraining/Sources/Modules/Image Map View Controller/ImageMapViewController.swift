@@ -91,10 +91,8 @@ class ImageMapViewController: UIViewController {
     func addAnnotationsOnMap() {
         if fromLibrary {
             addAnnotationsFromLibrary()
-            
         } else {
             addAnnotationsFromVK()
-            
         }
     }
     
@@ -160,6 +158,7 @@ class ImageMapViewController: UIViewController {
         let count = CGImageSourceGetCount(source)
         print("count: \(count)")
         for index in 0..<count {
+            
             if let metaData = CGImageSourceCopyMetadataAtIndex(source, 0, nil) {
                 print("all metaData[\(index)]: \(metaData)")
                 if let tags = CGImageMetadataCopyTags(metaData) as? [CGImageMetadataTag] {
@@ -172,15 +171,19 @@ class ImageMapViewController: UIViewController {
                         if let name = CGImageMetadataTagCopyName(tag) {
                             print("name: \(name)")
                         }
+                        
                         if let value = CGImageMetadataTagCopyValue(tag) {
                             print("value: \(value)")
                         }
+                        
                         if let prefix = CGImageMetadataTagCopyPrefix(tag) {
                             print("prefix: \(prefix)")
                         }
+                        
                         if let namespace = CGImageMetadataTagCopyNamespace(tag) {
                             print("namespace: \(namespace)")
                         }
+                        
                         if let qualifiers = CGImageMetadataTagCopyQualifiers(tag) {
                             print("qualifiers: \(qualifiers)")
                         }
