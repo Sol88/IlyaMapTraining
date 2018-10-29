@@ -31,11 +31,6 @@ class ViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         imageMapViewController.fromLibrary = fromLibrary
     }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        VKSdk.forceLogout()
-    }
-
 
 }
 

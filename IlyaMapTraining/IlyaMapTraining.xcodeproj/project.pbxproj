@@ -11,6 +11,8 @@
 		9952A21A21833D37004B672A /* VKImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9952A21921833D37004B672A /* VKImage.swift */; };
 		9952A21C21833DB4004B672A /* VKImageSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9952A21B21833DB4004B672A /* VKImageSize.swift */; };
 		997B5F362182E414000257C4 /* ClusterAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997B5F352182E414000257C4 /* ClusterAnnotationView.swift */; };
+		999AB296218353A7003217DA /* VKImageListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999AB295218353A7003217DA /* VKImageListViewController.swift */; };
+		999AB2982183554B003217DA /* VKImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999AB2972183554B003217DA /* VKImageCollectionViewCell.swift */; };
 		99A0CCCE2181EBF2007E4544 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A0CCCD2181EBF2007E4544 /* AppDelegate.swift */; };
 		99A0CCD02181EBF2007E4544 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A0CCCF2181EBF2007E4544 /* ViewController.swift */; };
 		99A0CCD32181EBF2007E4544 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 99A0CCD12181EBF2007E4544 /* Main.storyboard */; };
@@ -32,6 +34,8 @@
 		9952A21921833D37004B672A /* VKImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VKImage.swift; sourceTree = "<group>"; };
 		9952A21B21833DB4004B672A /* VKImageSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VKImageSize.swift; sourceTree = "<group>"; };
 		997B5F352182E414000257C4 /* ClusterAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClusterAnnotationView.swift; sourceTree = "<group>"; };
+		999AB295218353A7003217DA /* VKImageListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VKImageListViewController.swift; sourceTree = "<group>"; };
+		999AB2972183554B003217DA /* VKImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VKImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		99A0CCCA2181EBF2007E4544 /* IlyaMapTraining.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IlyaMapTraining.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		99A0CCCD2181EBF2007E4544 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		99A0CCCF2181EBF2007E4544 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -95,10 +99,29 @@
 			isa = PBXGroup;
 			children = (
 				99A0CCE52181EC77007E4544 /* Main Screen */,
+				999AB2942183537F003217DA /* VK Images Collection */,
+				999AB2932183533F003217DA /* Map View Controller */,
 				99A0CCE62181EC80007E4544 /* Image Map View Controller */,
 				99B03C952181F7560023E385 /* Image Sheet */,
 			);
 			path = Modules;
+			sourceTree = "<group>";
+		};
+		999AB2932183533F003217DA /* Map View Controller */ = {
+			isa = PBXGroup;
+			children = (
+				99A0CCCF2181EBF2007E4544 /* ViewController.swift */,
+			);
+			path = "Map View Controller";
+			sourceTree = "<group>";
+		};
+		999AB2942183537F003217DA /* VK Images Collection */ = {
+			isa = PBXGroup;
+			children = (
+				999AB295218353A7003217DA /* VKImageListViewController.swift */,
+				999AB2972183554B003217DA /* VKImageCollectionViewCell.swift */,
+			);
+			path = "VK Images Collection";
 			sourceTree = "<group>";
 		};
 		99A0CCC12181EBF2007E4544 = {
@@ -161,7 +184,6 @@
 		99A0CCE52181EC77007E4544 /* Main Screen */ = {
 			isa = PBXGroup;
 			children = (
-				99A0CCCF2181EBF2007E4544 /* ViewController.swift */,
 				99F50C7A2183133D001F7689 /* LoginViewController.swift */,
 			);
 			path = "Main Screen";
@@ -309,7 +331,9 @@
 				99A0CCD02181EBF2007E4544 /* ViewController.swift in Sources */,
 				99F50C7D21833C39001F7689 /* VKPhotoResponse.swift in Sources */,
 				9952A21A21833D37004B672A /* VKImage.swift in Sources */,
+				999AB2982183554B003217DA /* VKImageCollectionViewCell.swift in Sources */,
 				997B5F362182E414000257C4 /* ClusterAnnotationView.swift in Sources */,
+				999AB296218353A7003217DA /* VKImageListViewController.swift in Sources */,
 				99B03C972181F7770023E385 /* ImageSheetViewController.swift in Sources */,
 				99B03C9B218206380023E385 /* CircleImageAnnotationView.swift in Sources */,
 				99A0CCCE2181EBF2007E4544 /* AppDelegate.swift in Sources */,

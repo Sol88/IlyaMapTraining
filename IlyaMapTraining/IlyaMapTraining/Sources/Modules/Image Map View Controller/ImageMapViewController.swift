@@ -29,6 +29,7 @@ class ImageMapViewController: UIViewController {
         self.fromLibrary = fromLibrary
         configureMapView(with: frame)
         configureImageSheetViewController()
+        
         if checkAuthorizationStatus() {
             prepareImages()
         }
@@ -40,6 +41,7 @@ class ImageMapViewController: UIViewController {
     
     //MARK: - Action
     @objc func revealRegionDetailsWithLongPressOnMap(sender: UILongPressGestureRecognizer) {
+        
         if sender.state != UIGestureRecognizer.State.began { return }
         let touchLocation = sender.location(in: mapView)
         let locationCoordinate = mapView.convert(touchLocation, toCoordinateFrom: mapView)
@@ -62,6 +64,7 @@ class ImageMapViewController: UIViewController {
     }
     
     func configureImageSheetViewController() {
+        
         imageSheetViewController = ImageSheetViewController()
         imageSheetViewController.targetSize = mapView.frame.size
         imageSheetViewController.getThumbnailImageHandler = { [weak self] image, location in
@@ -71,6 +74,7 @@ class ImageMapViewController: UIViewController {
             let annotation = CircleImageAnnotation(imageData: imageData)
             self?.mapView.addAnnotation(annotation)
         }
+        
         addChild(imageSheetViewController)
     }
     
@@ -95,8 +99,8 @@ class ImageMapViewController: UIViewController {
     func addAnnotationsFromLibrary() {
         guard let images = images else { return }
         for i in 0..<images.count {
-            let asset = images.object(at: i)
             
+            let asset = images.object(at: i)
             guard let location = asset.location else { continue }
             
             let annotation = CircleImageAnnotation()
@@ -121,14 +125,12 @@ class ImageMapViewController: UIViewController {
         let photoReq: VKRequest? = VKRequest(method: "photos.getAll", parameters: ["skip_hidden": 1])
         
         photoReq?.execute(resultBlock: { response in
-            print(response)
             guard let jsonResult = response?.json as? [String: Any] else { return }
-            
             
             let wrapper = VKPhotoResponse.init(JSON: jsonResult)
             guard let items = wrapper?.items else { return }
             for item in items {
-                let annotation = CircleImageAnnotation()
+                
                 let url = URL(string: item.photo604!)!
                 ImageDownloader.default.downloadImage(with: url, options: [], progressBlock: nil) {
                     [weak self] image, error, url, data in
@@ -136,10 +138,8 @@ class ImageMapViewController: UIViewController {
                         self?.getMetaData(for: image)
                     }
                 }
+                
             }
-            
-            
-            
         }, errorBlock: { error in
             if let error = error {
                 print(error)
@@ -158,6 +158,7 @@ class ImageMapViewController: UIViewController {
         let count = CGImageSourceGetCount(source)
         print("count: \(count)")
         for index in 0..<count {
+            
             if let metaData = CGImageSourceCopyMetadataAtIndex(source, 0, nil) {
                 print("all metaData[\(index)]: \(metaData)")
                 if let tags = CGImageMetadataCopyTags(metaData) as? [CGImageMetadataTag] {
@@ -166,19 +167,23 @@ class ImageMapViewController: UIViewController {
 
                     for tag in tags {
 
-                        let tagType = CGImageMetadataTagGetTypeID()
+//                        let tagType = CGImageMetadataTagGetTypeID()
                         if let name = CGImageMetadataTagCopyName(tag) {
                             print("name: \(name)")
                         }
+                        
                         if let value = CGImageMetadataTagCopyValue(tag) {
                             print("value: \(value)")
                         }
+                        
                         if let prefix = CGImageMetadataTagCopyPrefix(tag) {
                             print("prefix: \(prefix)")
                         }
+                        
                         if let namespace = CGImageMetadataTagCopyNamespace(tag) {
                             print("namespace: \(namespace)")
                         }
+                        
                         if let qualifiers = CGImageMetadataTagCopyQualifiers(tag) {
                             print("qualifiers: \(qualifiers)")
                         }
@@ -208,6 +213,7 @@ extension ImageMapViewController {
     }
     
     private func checkAuthorizationStatus() -> Bool{
+        
         let status = PHPhotoLibrary.authorizationStatus()
         switch status {
         case .authorized:
