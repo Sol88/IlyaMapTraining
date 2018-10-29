@@ -22,15 +22,17 @@ class LoginViewController: UIViewController {
         return storyboard.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
     }
     
-    var pushingVC: ViewController!
-    
+    var pushingVC: UIViewController!
+    var isAuthorized = false
     let VK_APP_ID = "6732389"
     var token: VKAccessToken?
 
     //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         loginButton.isEnabled = false
+        goToCollectionViewButton.isEnabled = false
         
         let sdkInstance = VKSdk.initialize(withAppId: VK_APP_ID)
         sdkInstance?.register(self)
@@ -39,21 +41,35 @@ class LoginViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         VKSdk.wakeUpSession(["photos"]) { [weak self] state, error in
+            
             if state == .initialized || state == .authorized {
                 self?.loginButton.isEnabled = true
-                self?.loginButton.isEnabled = true
+                self?.goToCollectionViewButton.isEnabled = true
+                self?.isAuthorized = true
+                
             } else if let error = error {
-                // Error handler
+                self?.isAuthorized = false
+                print(error)
+                
             }
         }
     }
     
     //MARK: - Action
     @IBAction func loginVKButtonHandler(_ sender: UIButton) {
+        
         let vc = ViewController.storyboardInstance
         vc.fromLibrary = false
         pushingVC = vc
-        VKSdk.authorize([VK_PER_PHOTOS])
+        
+        if isAuthorized {
+            performTransition()
+            
+        } else {
+            VKSdk.authorize([VK_PER_PHOTOS])
+            
+        }
+        
     }
     
     @IBAction func enterWithoutLogginHandler(_ sender: UIButton) {
@@ -64,7 +80,13 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func goToPhotoCollectionHandler(_ sender: UIButton) {
-        
+        let vc = VKImageListViewController.storyboardInstance
+        pushingVC = vc
+        if isAuthorized {
+            performTransition()
+        } else {
+            VKSdk.authorize([VK_PER_PHOTOS])
+        }
     }
     
     
@@ -82,8 +104,10 @@ extension LoginViewController: VKSdkDelegate, VKSdkUIDelegate {
         if let token = result.token {
             self.token = token
             performTransition()
+            
         } else if let error = result.error {
             print(error)
+            
         }
     }
     

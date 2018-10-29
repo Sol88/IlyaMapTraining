@@ -81,6 +81,43 @@
             </objects>
             <point key="canvasLocation" x="-690.39999999999998" y="144.3778110944528"/>
         </scene>
+        <!--Image List View Controller-->
+        <scene sceneID="MkU-i1-Iac">
+            <objects>
+                <viewController storyboardIdentifier="VKImageListViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="EMV-ys-0yf" customClass="VKImageListViewController" customModule="IlyaMapTraining" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="4uD-LD-k4f">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="0E4-Oq-r7P">
+                                <rect key="frame" x="8" y="28" width="359" height="631"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="1de-hU-DPk">
+                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells/>
+                            </collectionView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="0E4-Oq-r7P" firstAttribute="top" secondItem="2zO-ec-z36" secondAttribute="top" constant="8" id="61T-lU-cuz"/>
+                            <constraint firstItem="2zO-ec-z36" firstAttribute="trailing" secondItem="0E4-Oq-r7P" secondAttribute="trailing" constant="8" id="N1N-m5-Jld"/>
+                            <constraint firstItem="2zO-ec-z36" firstAttribute="bottom" secondItem="0E4-Oq-r7P" secondAttribute="bottom" constant="8" id="WSk-gr-x2P"/>
+                            <constraint firstItem="0E4-Oq-r7P" firstAttribute="leading" secondItem="2zO-ec-z36" secondAttribute="leading" constant="8" id="dQO-a0-zhI"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="2zO-ec-z36"/>
+                    </view>
+                    <connections>
+                        <outlet property="imagesCollectionView" destination="0E4-Oq-r7P" id="c4F-5r-2AH"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lxR-pb-04j" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-688.79999999999995" y="866.71664167916049"/>
+        </scene>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
