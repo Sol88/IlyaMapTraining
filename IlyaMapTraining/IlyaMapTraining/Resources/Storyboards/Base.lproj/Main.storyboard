@@ -35,14 +35,14 @@
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FYR-kr-02T">
                                 <rect key="frame" x="140" y="186" width="94" height="30"/>
-                                <state key="normal" title="Login with VK"/>
+                                <state key="normal" title="Map with VK"/>
                                 <connections>
                                     <action selector="loginVKButtonHandler:" destination="bwA-rm-GrD" eventType="touchUpInside" id="YVN-fi-qlS"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h96-zx-IQ6">
                                 <rect key="frame" x="118" y="294" width="138" height="30"/>
-                                <state key="normal" title="Enter without loggin"/>
+                                <state key="normal" title="Map without VK"/>
                                 <connections>
                                     <action selector="enterWithoutLogginHandler:" destination="bwA-rm-GrD" eventType="touchUpInside" id="Bo7-pT-8BZ"/>
                                 </connections>
@@ -70,11 +70,18 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="aYu-Pj-6Nf"/>
                     </view>
-                    <navigationItem key="navigationItem" id="OJ7-8l-351"/>
+                    <navigationItem key="navigationItem" id="OJ7-8l-351">
+                        <barButtonItem key="rightBarButtonItem" title="Item" id="vi9-ep-ESQ">
+                            <connections>
+                                <action selector="loginLogoutHandler:" destination="bwA-rm-GrD" id="Gi2-Cf-VuK"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="enterWithoutLoginButton" destination="h96-zx-IQ6" id="2ye-Nt-t58"/>
                         <outlet property="goToCollectionViewButton" destination="YUv-Za-75D" id="ndb-Nb-YgY"/>
                         <outlet property="loginButton" destination="FYR-kr-02T" id="Bl8-HQ-TzG"/>
+                        <outlet property="loginLogoutBarItem" destination="vi9-ep-ESQ" id="3Gr-xG-SC1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gIn-Zx-dir" userLabel="First Responder" sceneMemberID="firstResponder"/>

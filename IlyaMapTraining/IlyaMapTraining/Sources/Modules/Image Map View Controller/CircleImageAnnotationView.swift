@@ -41,7 +41,7 @@ class CircleImageAnnotationView: MKAnnotationView {
     
     override func prepareForDisplay() {
         super.prepareForDisplay()
-        
+         
         guard let annotation = annotation as? CircleImageAnnotation else { return }
         imageView.image = annotation.imageData.image
     }
