@@ -13,8 +13,8 @@ class ClusterAnnotationView: MKAnnotationView {
     
     override init(annotation: MKAnnotation?, reuseIdentifier: String?) {
         super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
+        
         collisionMode = .circle
-        centerOffset = CGPoint(x: 0, y: -10) // Offset center point to animate better with marker annotations
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -25,6 +25,7 @@ class ClusterAnnotationView: MKAnnotationView {
         super.prepareForDisplay()
         
         if let cluster = annotation as? MKClusterAnnotation {
+            
             let totalImages = cluster.memberAnnotations.count
             
             if count() > 0 {
@@ -40,20 +41,24 @@ class ClusterAnnotationView: MKAnnotationView {
     }
     
     private func drawRatio(_ fraction: Int, to whole: Int) -> UIImage {
-        let renderer = UIGraphicsImageRenderer(size: CGSize(width: 40, height: 40))
+        let renderer = UIGraphicsImageRenderer(size: CGSize(width: Constants.graphicImageRendererSideSize, height: Constants.graphicImageRendererSideSize))
+        
         return renderer.image { _ in
+            
             UIColor.black.setFill()
-            UIBezierPath(ovalIn: CGRect(x: 6, y: 6, width: 34, height: 34)).fill()
+            UIBezierPath(ovalIn: CGRect(x: Constants.blackCircleOffsetXY, y: Constants.blackCircleOffsetXY, width: Constants.blackCircleDiameter, height: Constants.blackCircleDiameter)).fill()
             
             UIColor.white.setFill()
-            UIBezierPath(ovalIn: CGRect(x: 8, y: 8, width: 30, height: 30)).fill()
+            UIBezierPath(ovalIn: CGRect(x: Constants.whiteCircleOffsetXY, y: Constants.whiteCircleOffsetXY, width: Constants.whiteCircleDiameter, height: Constants.whiteCircleDiameter)).fill()
             
             let attributes = [ NSAttributedString.Key.foregroundColor: UIColor.black,
-                               NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 23)]
+                               NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: Constants.fontSize)]
+            
             let text = "\(whole)"
             let size = text.size(withAttributes: attributes)
-            let rect = CGRect(x: 23 - size.width / 2, y: 23 - size.height / 2, width: size.width, height: size.height)
+            let rect = CGRect(x: Constants.fontSize - size.width / 2, y: Constants.fontSize - size.height / 2, width: size.width, height: size.height)
             text.draw(in: rect, withAttributes: attributes)
+            
         }
     }
     
@@ -63,6 +68,19 @@ class ClusterAnnotationView: MKAnnotationView {
         }
         
         return cluster.memberAnnotations.count
+    }
+    
+}
+
+extension ClusterAnnotationView {
+    
+    private enum Constants {
+        static let graphicImageRendererSideSize: CGFloat = 40
+        static let blackCircleDiameter: CGFloat = 34
+        static let blackCircleOffsetXY: CGFloat = 6
+        static let whiteCircleOffsetXY: CGFloat = 8
+        static let whiteCircleDiameter: CGFloat = 30
+        static let fontSize: CGFloat = 23
     }
     
 }

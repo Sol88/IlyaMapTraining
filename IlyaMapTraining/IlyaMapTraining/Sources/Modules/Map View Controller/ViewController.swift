@@ -24,6 +24,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         imageMapViewController = ImageMapViewController(with: view.frame, fromLibrary: fromLibrary)
+        
         addChild(imageMapViewController)
         view.addSubview(imageMapViewController.mapView)
     }

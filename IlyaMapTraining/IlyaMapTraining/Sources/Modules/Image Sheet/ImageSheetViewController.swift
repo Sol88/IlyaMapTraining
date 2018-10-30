@@ -35,6 +35,7 @@ class ImageSheetViewController: UIViewController {
         
         return imageCollectionView
     }()
+    
     private var images: PHFetchResult<PHAsset>?
     private var imagesWithoutLocation: [PHAsset] = []
     private var actions: [UIAlertAction] = []
@@ -80,21 +81,27 @@ class ImageSheetViewController: UIViewController {
     }
     
     private func getActionSheet(accessGranted: Bool) -> UIAlertController {
+        
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         self.actionSheet = actionSheet
+        
         let imageCollectionView = collectionView
         
         if accessGranted {
+            
             if imagesWithoutLocation.count > 0 {
                 actionSheet.title = "Set geotag to image\n\n\n\n\n\n\n"
                 actionSheet.view.addSubview(imageCollectionView)
+                
             } else {
                 actionSheet.title = "There are no images without geotag"
             }
             
         } else {
+            
             actionSheet.title = nil
             imageCollectionView.removeFromSuperview()
+            
             actionSheet.addAction(UIAlertAction(title: "Access to Library needed. Press to open Settings", style: .default) { _ in
                 guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else {
                     return
@@ -104,6 +111,7 @@ class ImageSheetViewController: UIViewController {
                     UIApplication.shared.open(settingsUrl)
                 }
             })
+            
         }
         
         for action in actions {
@@ -121,70 +129,92 @@ class ImageSheetViewController: UIViewController {
         allPhotosOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
         
         images = PHAsset.fetchAssets(with: allPhotosOptions)
+        
         guard let images = images else { return }
+        
         for i in 0..<images.count {
             let image = images.object(at: i)
+            
             if image.location == nil {
                 imagesWithoutLocation.append(image)
             }
         }
+        
     }
 }
 
 //MARK: - UICollectionViewDelegate, UICollectionViewDataSource
 extension ImageSheetViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        guard let images = images else { return 0 }
-//        return images.count
         return imagesWithoutLocation.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseCellIdentifier, for: indexPath) as! ImagesCollectionViewCell
+        
         let asset = imagesWithoutLocation[indexPath.row]
         let location = asset.location
+        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseCellIdentifier, for: indexPath) as! ImagesCollectionViewCell
         cell.representedAssetIdentifier = asset.localIdentifier
+        
         imageManager.requestImage(for: asset, targetSize: thumbnailSize, contentMode: .aspectFill, options: nil) { image, _ in
             if cell.representedAssetIdentifier == asset.localIdentifier {
                 cell.populate(with: image, location: location)
             }
         }
+        
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
         if let targetSize = targetSize {
+            
             let selectedCell = collectionView.cellForItem(at: indexPath) as! ImagesCollectionViewCell
             let selectedAsset = imagesWithoutLocation[indexPath.row]
+            
             if let location = newLocationForImage {
+                
                 let newLocation = CLLocation(latitude: location.latitude, longitude: location.longitude)
+                
                 PHPhotoLibrary.shared().performChanges({
                     let assetChangeRequest = PHAssetChangeRequest.init(for: selectedAsset)
                     assetChangeRequest.location = newLocation
                 })
+                
                 selectedCell.location = newLocation
+                
                 getThumbnailImageHandler?(selectedCell.thumbnailImage, selectedCell.location)
                 getHighQualityImage(for: selectedAsset, with: targetSize)
+                
                 imagesWithoutLocation.remove(at: indexPath.row)
                 collectionView.deleteItems(at: [indexPath])
             }
+            
         }
+        
         actionSheet?.dismiss(animated: true)
     }
     
     func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
+        
         let highlightedCell = collectionView.cellForItem(at: indexPath) as! ImagesCollectionViewCell
+        
         animator.addAnimations {
             highlightedCell.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
         }
+        
         animator.startAnimation()
     }
     
     func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
+        
         let unhighlightedCell = collectionView.cellForItem(at: indexPath) as! ImagesCollectionViewCell
+        
         animator.addAnimations {
             unhighlightedCell.transform = CGAffineTransform.identity
         }
+        
         animator.startAnimation()
     }
 }
@@ -192,6 +222,7 @@ extension ImageSheetViewController: UICollectionViewDelegate, UICollectionViewDa
 //MARK: - PhotoKit
 extension ImageSheetViewController {
     private func getHighQualityImage(for asset: PHAsset, with size: CGSize) {
+        
         let options = PHImageRequestOptions()
         options.deliveryMode = .highQualityFormat
         options.isNetworkAccessAllowed = true
@@ -200,6 +231,7 @@ extension ImageSheetViewController {
             guard let image = image else { return }
             self.getHighQualityImageHandler?(image, asset.location)
         }
+        
     }
     
     private func resetCachedAssets() {
@@ -207,21 +239,26 @@ extension ImageSheetViewController {
     }
     
     private func checkAuthorizationStatus() -> Bool{
+        
         let status = PHPhotoLibrary.authorizationStatus()
         switch status {
         case .authorized:
             return true
+            
         case .denied, .restricted, .notDetermined:
             requestAuthorizationForPhoto()
             return false
         }
+        
     }
     
     private func requestAuthorizationForPhoto() {
+        
         PHPhotoLibrary.requestAuthorization { [weak self] status in
             if status == .authorized {
                 self?.prepareThumbnails()
             }
         }
+        
     }
 }
