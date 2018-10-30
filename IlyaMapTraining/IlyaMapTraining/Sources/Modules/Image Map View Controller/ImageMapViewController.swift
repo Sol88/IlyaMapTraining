@@ -52,6 +52,7 @@ class ImageMapViewController: UIViewController {
     
     //MARK: - Method
     func configureMapView(with frame: CGRect) {
+        
         let longPressGestrueRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(revealRegionDetailsWithLongPressOnMap(sender:)))
         
         mapView = MKMapView(frame: frame)
@@ -79,6 +80,7 @@ class ImageMapViewController: UIViewController {
     }
     
     func prepareImages() {
+        
         resetCachedAssets()
         
         let allPhotosOptions = PHFetchOptions()
@@ -89,11 +91,13 @@ class ImageMapViewController: UIViewController {
     }
     
     func addAnnotationsOnMap() {
+        
         if fromLibrary {
             addAnnotationsFromLibrary()
         } else {
             addAnnotationsFromVK()
         }
+        
     }
     
     func addAnnotationsFromLibrary() {
@@ -125,8 +129,8 @@ class ImageMapViewController: UIViewController {
         let photoReq: VKRequest? = VKRequest(method: "photos.getAll", parameters: ["skip_hidden": 1])
         
         photoReq?.execute(resultBlock: { response in
-            guard let jsonResult = response?.json as? [String: Any] else { return }
             
+            guard let jsonResult = response?.json as? [String: Any] else { return }
             let wrapper = VKPhotoResponse.init(JSON: jsonResult)
             guard let items = wrapper?.items else { return }
             for item in items {
@@ -140,19 +144,25 @@ class ImageMapViewController: UIViewController {
                 }
                 
             }
+            
         }, errorBlock: { error in
+            
             if let error = error {
                 print(error)
             }
+            
         })
     }
     
     func getMetaData(for image: UIImage) {
+        
         guard let data = image.jpegData(compressionQuality: 1) else { return }
         getMetaData(for: data)
+        
     }
     
     func getMetaData(for data: Data) {
+        
         guard let source = CGImageSourceCreateWithData(data as CFData, nil) else { return }
         
         let count = CGImageSourceGetCount(source)
@@ -191,7 +201,6 @@ class ImageMapViewController: UIViewController {
                     }
                 }
             }
-            
         }
         
     }
@@ -200,9 +209,10 @@ class ImageMapViewController: UIViewController {
 
 extension ImageMapViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        
         guard let annotation = annotation as? CircleImageAnnotation else { return nil }
+        
         let annotationView = CircleImageAnnotationView(annotation: annotation, reuseIdentifier: CircleImageAnnotationView.reuseID)
+        
         return annotationView
     }
 }
@@ -218,6 +228,7 @@ extension ImageMapViewController {
         switch status {
         case .authorized:
             return true
+            
         case .denied, .restricted, .notDetermined:
             requestAuthorizationForPhoto()
             return false
@@ -225,10 +236,12 @@ extension ImageMapViewController {
     }
     
     private func requestAuthorizationForPhoto() {
+        
         PHPhotoLibrary.requestAuthorization { [weak self] status in
             if status == .authorized {
                 self?.prepareImages()
             }
         }
+        
     }
 }

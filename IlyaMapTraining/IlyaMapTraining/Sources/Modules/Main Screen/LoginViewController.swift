@@ -51,17 +51,18 @@ class LoginViewController: UIViewController {
                 print(error)
             }
         }
+        
     }
     
     //MARK: - Action
     @IBAction func loginLogoutHandler(_ sender: UIBarButtonItem) {
+        
         if isAuthorized {
             VKSdk.forceLogout()
             set(isAuthorized: false)
             
         } else {
             VKSdk.authorize([VK_PER_PHOTOS])
-            
         }
     }
     
@@ -92,10 +93,13 @@ class LoginViewController: UIViewController {
     
     //MARK: - Method
     func set(isAuthorized: Bool) {
+        
         loginButton.isEnabled = isAuthorized
         goToCollectionViewButton.isEnabled = isAuthorized
         self.isAuthorized = isAuthorized
+        
         loginLogoutBarItem.title = isAuthorized ? "Sign out VK" : "Sign in VK"
+        
     }
     
     func performTransition() {
@@ -108,12 +112,14 @@ class LoginViewController: UIViewController {
 //MARK: - VK
 extension LoginViewController: VKSdkDelegate, VKSdkUIDelegate {
     func vkSdkAccessAuthorizationFinished(with result: VKAuthorizationResult!) {
+        
         if let _ = result.token {
             set(isAuthorized: true)
+            
         } else if let error = result.error {
             print(error)
-            
         }
+        
     }
     
     func vkSdkUserAuthorizationFailed() {

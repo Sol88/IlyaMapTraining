@@ -23,15 +23,19 @@ class ImagesCollectionViewCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
         imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: frame.size.width, height: frame.size.height))
-        imageView.contentMode = .scaleAspectFill
+        
+        imageView.contentMode = .scaleAspectFit
         imageView.layer.cornerRadius = 8
         imageView.clipsToBounds = true
+        
         contentView.addSubview(imageView)
     }
     
     override func prepareForReuse() {
         super.prepareForReuse()
+        
         imageView.image = nil
         location = nil
     }

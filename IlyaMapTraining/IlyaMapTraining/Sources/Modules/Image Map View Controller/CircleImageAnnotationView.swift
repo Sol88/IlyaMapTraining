@@ -19,13 +19,15 @@ class CircleImageAnnotationView: MKAnnotationView {
     //MARK: - Life cycle
     override init(annotation: MKAnnotation?, reuseIdentifier: String?) {
         super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
+        
         clusteringIdentifier = imageClusterID
         
-        frame.size = CGSize(width: 60, height: 60)
+        frame.size = CGSize(width: Constants.circleDiameter, height: Constants.circleDiameter)
+        
         imageView = UIImageView(frame: bounds)
         imageView.clipsToBounds = true
         imageView.contentMode = .scaleAspectFill
-        imageView.layer.cornerRadius = 30
+        imageView.layer.cornerRadius = Constants.cornerRadius
         
         addSubview(imageView)
     }
@@ -44,6 +46,19 @@ class CircleImageAnnotationView: MKAnnotationView {
          
         guard let annotation = annotation as? CircleImageAnnotation else { return }
         imageView.image = annotation.imageData.image
+    }
+    
+}
+
+extension CircleImageAnnotationView {
+    
+    enum Constants {
+        static let circleDiameter: CGFloat = 60
+        static var cornerRadius: CGFloat {
+            get {
+                return circleDiameter / 2
+            }
+        }
     }
     
 }
